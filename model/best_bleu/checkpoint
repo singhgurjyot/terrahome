@@ -1,0 +1,2 @@
+model_checkpoint_path: "D:/terra_bot/model/best_bleu/translate.ckpt-301000"
+all_model_checkpoint_paths: "D:/terra_bot/model/best_bleu/translate.ckpt-301000"

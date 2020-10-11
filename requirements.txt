@@ -1,0 +1,9 @@
+wit
+SpeechRecognition
+tensorflow==1.14
+regex
+colorama
+bs4
+pandas
+pyowm
+pyttsx3
