@@ -14,35 +14,35 @@ import random
 import pyowm
 
 
-CLIENT_ID = 'RWINEW5YS0D3ONXTR4G1RPH2PAEQRTNFWMSFA001KFW1LGSB'
-CLIENT_SECRET = 'QQYGBVSIM1YSVXAO3ENP4NN2VJKIDICEKJSLWICYW0RDGPQ3'
+CLIENT_ID = 'PASTE_YOUR_FOURSQUARE_CLIENT_ID'
+CLIENT_SECRET = 'PASTE_YOUR_FOURSQUARE_CLIENT_SECRET'
 VERSION = '20180605'
-WEATHER_API_KEY = 'f250f3234def773eaea5e2faebcc2015'
-LOCATION_API_KEY = 'fc1c4737a09587cede833b86ae952973'
+WEATHER_API_KEY = 'PASTE_YOUR_OPENWEATHERMAP_API_KEY'
+LOCATION_API_KEY = 'PASTE_YOUR_IPSTACK_API_KEY'
 
 degree_sign= u'\N{DEGREE SIGN}'
 
 
 def play_music(song, artist, movie):
     youtube = 'https://www.youtube.com'
-    
+
     if song == '' and artist == '' and movie == '':
         song = "god's plan"
-    
+
     tokens=[]
-    
+
     tokens.extend(song.split(' '))
-    
+
     if artist != '':
         if song != '':
             tokens.append('by')
         tokens.extend(artist.split(' '))
-        
+
     if movie != '':
         if song != '':
             tokens.append("from")
         tokens.extend(movie.split(' '))
-    
+
     full_qry = ' '.join(tokens)
     qry = '+'.join(tokens)
     url = youtube+'/results?search_query='+qry
@@ -54,12 +54,12 @@ def play_music(song, artist, movie):
         vids.append(link.get('href'))
     webbrowser.open(youtube+vids[0])
     return("Playing "+full_qry+" on Youtube.")
-        
-        
+
+
     #except:
         #return("Cannot open YouTube, Please Check your Internet Connection or try again later.")
-        
-        
+
+
 def send_email(email_id='singh.gurjyot08@gmail.com', body='Hi Gurjyot, This is a mail from terrabot'):
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -71,8 +71,8 @@ def send_email(email_id='singh.gurjyot08@gmail.com', body='Hi Gurjyot, This is a
         return("Email sent to "+email_id)
     except:
         return("Unable to send email, Please Check your Internet Connection or try again later.")
-    
-    
+
+
 def get_nearby_venues(name, lat, long, radius=500, LIMIT=15):
     venues_list = []
     url = "https://api.foursquare.com/v2/venues/explore?&client_id={}&client_secret={}&v={}&ll={},{}&radius={}&limit={}".format(
@@ -82,7 +82,7 @@ def get_nearby_venues(name, lat, long, radius=500, LIMIT=15):
     lat, long,
     radius,
     LIMIT)
-    
+
     try:
         results = requests.get(url).json()['response']['groups'][0]['items']
         venues_list.append([(
@@ -92,13 +92,13 @@ def get_nearby_venues(name, lat, long, radius=500, LIMIT=15):
                 v['venue']['categories'][0]['name']) for v in results])
 
         nearby_venues = pd.DataFrame([item for venue_list in venues_list for item in venue_list])
-        nearby_venues.columns=['shop_name', 'lat', 'long', 'category']    
+        nearby_venues.columns=['shop_name', 'lat', 'long', 'category']
         return nearby_venues
     except:
         err = "Cannot find places right now, Please Check your Internet Connection or try again later."
         return err
- 
-    
+
+
 def get_joke():
     with open('jokes.txt', 'r') as f:
         jokes = f.readlines()
@@ -115,7 +115,7 @@ def weather_forecast(state='Delhi'):
         return('The temperature in '+state+" is "+str(temp)+degree_sign+"C.")
     except:
         return("Unable to find temperature right now, Please Check your Internet Connection or try again later.")
-    
+
 def goodbye():
     with open('greetings_bye.txt', 'r') as f:
         greetings = f.readlines()
